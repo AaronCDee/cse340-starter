@@ -16,6 +16,10 @@ UPDATE public.account
 SET account_type = 'Admin'::account_type
 WHERE account_email = 'tony@starkent.com';
 
+-- Delete Tony Stark from DB
+DELETE FROM public.account
+WHERE account_email = 'tony@starkent.com';
+
 -- Update hummer record description
 UPDATE public.inventory
 SET inv_description = REPLACE(inv_description, 'the small interiors', 'a huge interior')
