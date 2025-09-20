@@ -59,7 +59,7 @@ nav ul {
   margin: 0;
   padding: 0;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 nav li {
@@ -224,6 +224,71 @@ footer {
   align-items: center;
 }
 
+.inv-cont {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.inv-title-desktop {
+  display: none;
+}
+
+.inv-title-mobile {
+  display: block;
+  margin-top: 0;
+}
+
+.inv-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.inv-purchase-details {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.btn-primary {
+  background-color: #87ceeb;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  height: fit-content;
+  padding: 10px 15px;
+}
+
+.btn-primary:hover {
+  cursor: pointer;
+}
+
+.inv-details {
+  border: black;
+}
+
+.inv-details table {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: Arial, sans-serif;
+}
+
+.inv-details table, th, td {
+  border: 1px solid black;
+}
+
+.inv-details th, td {
+  padding: 8px;
+  text-align: left;
+}
+
+table th:last-child,
+table td:last-child {
+  background-color: #87ceeb;
+}
+
 @media screen and (min-width: 768px) {
   #wrapper {
     max-width: 1200px;
@@ -269,6 +334,20 @@ footer {
 
   .delorean-features {
     grid-column: 1 / 4;
+  }
+
+  .inv-cont {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .inv-title-desktop {
+    display: block;
+    margin-top: 0;
+  }
+
+  .inv-title-mobile {
+    display: none;
   }
 }
 

@@ -57,6 +57,50 @@ Util.buildClassificationGrid = async function(data){
   return grid
 }
 
+Util.buildInventoryPage = async function(data) {
+  title =
+
+  page = `
+    <h2 class="inv-title-mobile">${data.inv_year} ${data.inv_make} ${data.inv_model}</h2>
+    <section class="inv-cont">
+      <div>
+        <img src="${data.inv_image}" width="100%">
+        <p>${data.inv_description}</p>
+      </div>
+
+      <div class="inv-details">
+        <h1 class="inv-title-desktop">${data.inv_year} ${data.inv_make} ${data.inv_model}</h1>
+        <table>
+          <tr>
+            <td>Type</td>
+            <td>${data.classification_name}</td>
+          </tr>
+          <tr>
+            <td>Year</td>
+            <td>${data.inv_year}</td>
+          </tr>
+          <tr>
+            <td>Color</td>
+            <td>${data.inv_color}</td>
+          </tr>
+          <tr>
+            <td>Miles</td>
+            <td>${Number(data.inv_miles).toLocaleString('en-US')}</td>
+          </tr>
+        </table>
+
+        <div class="inv-purchase-details">
+          <h2>$${Number(data.inv_price).toLocaleString('en-US')}</h2>
+
+          <button class="btn-primary">Buy Now</button>
+        </div>
+      </div>
+    </section>
+  `
+
+  return page
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for
