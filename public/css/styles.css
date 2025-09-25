@@ -289,6 +289,14 @@ table td:last-child {
   background-color: #87ceeb;
 }
 
+.notice li {
+  color: blue;
+}
+
+.error li {
+  color: red;
+}
+
 @media screen and (min-width: 768px) {
   #wrapper {
     max-width: 1200px;
