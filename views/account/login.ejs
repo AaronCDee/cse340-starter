@@ -1,0 +1,22 @@
+<% if (title) { %>
+  <h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
+
+<form class="login-form" action="/account/login" method="post">
+  <div class="login-form-group">
+    <label for="account_email" class="login-form-label">Email:</label>
+    <input id="account_email" type="email" name="account_email" class="login-form-input" required />
+  </div>
+
+  <div class="login-form-group">
+    <label for="account_password" class="login-form-label">Password:</label>
+    <input id="account_password" type="password" name="account_password" class="login-form-input" required />
+  </div>
+
+  <button class="login-form-btn">Login</button>
+
+  <p>No account? <a class="sign-up-link" href="/account/register">Sign-up</a></p>
+</form>
+
