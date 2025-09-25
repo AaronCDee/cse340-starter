@@ -4,6 +4,16 @@
   res.redirect('/')
 } %>
 
+<%- messages() %>
+
+<% if (errors) { %>
+  <ul class="error">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
+
 <form class="login-form" action="/account/register" method="post">
   <div class="login-form-group">
     <label for="account_firstname" class="login-form-label">First Name:</label>
@@ -22,7 +32,7 @@
 
   <div class="login-form-group">
     <label for="account_password" class="login-form-label">Password:</label>
-    <input id="account_password" type="password" name="account_password" min="12" class="login-form-input" required />
+    <input id="account_password" type="password" name="account_password" min="12" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" class="login-form-input" required />
   </div>
 
   <div>

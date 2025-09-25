@@ -16,6 +16,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
     title: className + " vehicles",
     nav,
     grid,
+    errors: null,
   })
 }
 
@@ -31,6 +32,7 @@ invCont.buildByInvId = async function (req, res, next) {
     title: data.inv_make + " " + data.inv_model + " - " + data.inv_year,
     nav,
     page,
+    errors: null,
   })
 }
 
