@@ -17,17 +17,17 @@
 <form class="login-form" action="/account/register" method="post">
   <div class="login-form-group">
     <label for="account_firstname" class="login-form-label">First Name:</label>
-    <input id="account_firstname" type="text" name="account_firstname" class="login-form-input" required />
+    <input id="account_firstname" type="text" name="account_firstname" class="login-form-input" value="<%= locals.account_firstname %>" required />
   </div>
 
   <div class="login-form-group">
     <label for="account_lastname" class="login-form-label">Last Name:</label>
-    <input id="account_lastname" type="text" name="account_lastname" class="login-form-input" required />
+    <input id="account_lastname" type="text" name="account_lastname" class="login-form-input" value="<%= locals.account_lastname %>" required />
   </div>
 
   <div class="login-form-group">
     <label for="account_email" class="login-form-label">Email:</label>
-    <input id="account_email" type="email" name="account_email" class="login-form-input" required />
+    <input id="account_email" type="email" name="account_email" class="login-form-input" value="<%= locals.account_email %>" required />
   </div>
 
   <div class="login-form-group">
