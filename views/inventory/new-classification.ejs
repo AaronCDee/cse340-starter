@@ -1,0 +1,24 @@
+<% if (title) { %>
+  <h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
+
+<%- messages() %>
+
+<% if (errors) { %>
+  <ul class="error">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
+
+<form class="login-form" action="/inv/classifications/new" method="post">
+  <div class="login-form-group">
+    <label for="classification_name" class="login-form-label">Classification Name:</label>
+    <input id="classification_name" type="text" name="classification_name" class="login-form-input" value="<%= locals.classification_name %>" required />
+  </div>
+
+  <button class="login-form-btn">Save</button>
+</form>
