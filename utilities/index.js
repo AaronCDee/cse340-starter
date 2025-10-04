@@ -139,11 +139,31 @@ Util.checkJWTToken = (req, res, next) => {
     }
     res.locals.accountData = accountData
     res.locals.loggedin = 1
+    if (['Employee', 'Admin'].includes(accountData.account_type)) {
+      res.locals.isEmployeeOrAdmin = 1
+    }
     next()
    })
  } else {
   next()
  }
+}
+
+/* ****************************************
+* Middleware to check employee or admin
+**************************************** */
+Util.requireEmployeeOrAdmin = (req, res, next) => {
+  if (res.locals.loggedin !== 1) {
+    req.flash('notice', 'Please log in to access this page.')
+    return res.redirect('/account/login')
+  }
+
+  if (res.locals.isEmployeeOrAdmin !== 1) {
+    req.flash('notice', 'You do not have permission to perform that action.')
+    return res.redirect('/account/login')
+  }
+
+  next()
 }
 
 /* ****************************************

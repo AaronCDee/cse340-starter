@@ -1,0 +1,52 @@
+<% if (title) { %>
+  <h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
+
+<%- messages() %>
+
+<% if (errors) { %>
+  <ul class="error">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
+
+<form class="login-form" action="/account/update" method="post">
+  <div class="login-form-group">
+    <label for="account_firstname" class="login-form-label">First Name:</label>
+    <input id="account_firstname" type="text" name="account_firstname" class="login-form-input" value="<%= locals.accountData.account_firstname %>" required />
+  </div>
+  <div class="login-form-group">
+    <label for="account_lastname" class="login-form-label">Last Name:</label>
+    <input id="account_lastname" type="text" name="account_lastname" class="login-form-input" value="<%= locals.accountData.account_lastname %>" required />
+  </div>
+  <div class="login-form-group">
+    <label for="account_email" class="login-form-label">Email:</label>
+    <input id="account_email" type="email" name="account_email" class="login-form-input" value="<%= locals.accountData.account_email %>" required />
+  </div>
+
+  <button class="login-form-btn">Update Details</button>
+</form>
+<br>
+<br>
+<form class="login-form" action="/account/updatePassword" method="post">
+  <div class="login-form-group">
+    <label for="account_password" class="login-form-label">Password:</label>
+    <input id="account_password" type="password" name="account_password" min="12" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" class="login-form-input" required />
+  </div>
+
+  <div>
+    <p>Password should:</p>
+    <ul>
+      <li>Be 12 characters in length, minimum</li>
+      <li>contain at least 1 capital letter</li>
+      <li>contain at least 1 number</li>
+      <li>contain at least 1 special character</li>
+    </ul>
+  </div>
+
+  <button class="login-form-btn">Update Password</button>
+</form>

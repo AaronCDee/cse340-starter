@@ -329,6 +329,12 @@ table td:last-child {
   outline: none;
 }
 
+.account-management-links {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+}
+
 .login-form-btn {
   width: fit-content;
   border-radius: 50px;

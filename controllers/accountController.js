@@ -112,4 +112,91 @@ async function buildManagement(req, res) {
   })
 }
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement }
+async function buildEdit(req, res) {
+  let nav = await utilities.getNav()
+  res.render("account/edit", {
+    title: "Edit Account Details",
+    nav,
+    errors: null,
+  })
+}
+
+/* ****************************************
+*  Process details update
+* *************************************** */
+async function updateAccountDetails(req, res) {
+  let nav = await utilities.getNav()
+  const { account_firstname, account_lastname, account_email } = req.body
+
+  const regResult = await accountModel.updateAccountDetails(
+    res.locals.accountData.account_id,
+    account_firstname,
+    account_lastname,
+    account_email,
+  )
+
+  if (regResult) {
+    res.locals.accountData = regResult
+    const accessToken = jwt.sign(regResult, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
+    if(process.env.NODE_ENV === 'development') {
+      res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+    } else {
+      res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
+    }
+    req.flash(
+      'notice',
+      'Updated account details successfully'
+    )
+    res.status(200).render("account/management", {
+      title: "Account Management",
+      nav,
+    })
+  } else {
+    req.flash("notice", "Sorry, the account update failed.")
+    res.status(501).render("account/edit", {
+      title: "Edit Account Details",
+      nav,
+      errors: null,
+    })
+  }
+}
+
+/* ****************************************
+*  Process password update
+* *************************************** */
+async function updateAccountPassword(req, res) {
+  let nav = await utilities.getNav()
+  const { account_password } = req.body
+
+  const regResult = await accountModel.updateAccountPassword(
+    res.locals.accountData.account_id,
+    account_password
+  )
+
+  if (regResult) {
+    res.locals.accountData = regResult
+    const accessToken = jwt.sign(regResult, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
+    if(process.env.NODE_ENV === 'development') {
+      res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+    } else {
+      res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
+    }
+    req.flash(
+      'notice',
+      'Updated account password successfully'
+    )
+    res.status(200).render("account/management", {
+      title: "Account Management",
+      nav,
+    })
+  } else {
+    req.flash("notice", "Sorry, the password update failed.")
+    res.status(501).render("account/edit", {
+      title: "Edit Account Details",
+      nav,
+      errors: null,
+    })
+  }
+}
+
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement, buildEdit, updateAccountDetails, updateAccountPassword }

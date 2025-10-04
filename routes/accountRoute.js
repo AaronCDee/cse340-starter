@@ -3,21 +3,29 @@ const express = require("express")
 const router = new express.Router()
 const accountController = require("../controllers/accountController")
 const utilities = require('../utilities/')
-const regValidate = require('../utilities/account-validation')
+const validate = require('../utilities/account-validation')
 
 // Route to build inventory by classification view
 router.get('/login', utilities.handleErrors(accountController.buildLogin))
 router.get('/register', utilities.handleErrors(accountController.buildRegister))
 router.post('/register',
-  regValidate.registrationRules(),
-  regValidate.checkRegData,
+  validate.registrationRules(),
+  validate.checkRegData,
   utilities.handleErrors(accountController.registerAccount)
 )
 router.post("/login",
-  regValidate.loginRules(),
-  regValidate.checkLoginData,
+  validate.loginRules(),
+  validate.checkLoginData,
   utilities.handleErrors(accountController.accountLogin)
 )
-router.get('/', accountController.buildManagement)
+router.get('/', utilities.handleErrors(accountController.buildManagement))
+
+router.get('/edit', utilities.handleErrors(accountController.buildEdit))
+
+router.post('/update',
+  validate.updateDetailsRules(),
+  validate.checkUpdateData,
+  utilities.handleErrors(accountController.updateAccountDetails))
+router.post('/updatePassword', utilities.handleErrors(accountController.updateAccountPassword))
 
 module.exports = router;

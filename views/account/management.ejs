@@ -6,4 +6,11 @@
 
 <%- messages() %>
 
-<h1>You're logged in</h1>
+<h2>Welcome, <%= locals.accountData.account_firstname %> <%= locals.accountData.account_lastname %></h2>
+
+<a href="/account/edit %>">Update Account Information</a>
+
+<% if (locals.isEmployeeOrAdmin) { %>
+  <h3>Inventory Management</h3>
+  <a href="/inv/">Manage Inventory</a>
+<% } %>
