@@ -199,4 +199,12 @@ async function updateAccountPassword(req, res) {
   }
 }
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement, buildEdit, updateAccountDetails, updateAccountPassword }
+/* ****************************************
+ *  Process logout request
+ * ************************************ */
+async function accountLogout(req, res) {
+  res.clearCookie('jwt')
+  res.redirect('/')
+}
+
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement, buildEdit, updateAccountDetails, updateAccountPassword, accountLogout }
