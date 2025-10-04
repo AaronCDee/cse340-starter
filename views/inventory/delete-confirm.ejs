@@ -1,0 +1,40 @@
+<% if (title) { %>
+  <h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
+
+<%- messages() %>
+
+<% if (errors) { %>
+  <ul class="error">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
+
+<form id="deleteForm" class="login-form" action="/inv/delete" method="post">
+  <div class="login-form-group">
+    <label for="inv_make" class="login-form-label">Make:</label>
+    <input id="inv_make" type="text" name="inv_make" class="login-form-input" value="<%= locals.inv_make %>" readonly required />
+  </div>
+  <div class="login-form-group">
+    <label for="inv_model" class="login-form-label">Model:</label>
+    <input id="inv_model" type="text" name="inv_model" class="login-form-input" value="<%= locals.inv_model %>" readonly required />
+  </div>
+  <div class="login-form-group">
+    <label for="inv_year" class="login-form-label">Year:</label>
+    <input id="inv_year" type="number" name="inv_year" min="0" class="login-form-input" value="<%= locals.inv_year %>" readonly required />
+  </div>
+  <div class="login-form-group">
+    <label for="inv_price" class="login-form-label">Price:</label>
+    <input id="inv_price" type="number" name="inv_price" class="login-form-input" value="<%= locals.inv_price %>" readonly required />
+  </div>
+
+  <input type="hidden" name="inv_id" value="<%= locals.inv_id ? locals.inv_id : '' %>" readonly />
+
+  <p>Confirm Deletion? The delete is permanent</p>
+
+  <button class="login-form-btn">Confirm Delete</button>
+</form>

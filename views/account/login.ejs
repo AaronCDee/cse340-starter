@@ -9,7 +9,7 @@
 <form class="login-form" action="/account/login" method="post">
   <div class="login-form-group">
     <label for="account_email" class="login-form-label">Email:</label>
-    <input id="account_email" type="email" name="account_email" class="login-form-input" required />
+    <input id="account_email" type="email" name="account_email" class="login-form-input" value="<%= locals.account_email %>" required />
   </div>
 
   <div class="login-form-group">

@@ -1,0 +1,63 @@
+<% if (title) { %>
+  <h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
+
+<%- messages() %>
+
+<% if (errors) { %>
+  <ul class="error">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
+
+<form id="updateForm" class="login-form" action="/inv/update" method="post">
+  <%- classificationList %>
+  <div class="login-form-group">
+    <label for="inv_make" class="login-form-label">Make:</label>
+    <input id="inv_make" type="text" name="inv_make" class="login-form-input" value="<%= locals.inv_make %>" required />
+  </div>
+  <div class="login-form-group">
+    <label for="inv_model" class="login-form-label">Model:</label>
+    <input id="inv_model" type="text" name="inv_model" class="login-form-input" value="<%= locals.inv_model %>" required />
+  </div>
+  <div class="login-form-group">
+    <label for="inv_year" class="login-form-label">Year:</label>
+    <input id="inv_year" type="number" name="inv_year" min="0" class="login-form-input" value="<%= locals.inv_year %>" required />
+  </div>
+  <div class="login-form-group">
+    <label for="inv_description" class="login-form-label">Description:</label>
+    <textarea id="inv_description" name="inv_description" class="login-form-input" required><%= locals.inv_description || "" %></textarea>
+  </div>
+  <div class="login-form-group">
+    <label for="inv_image" class="login-form-label">Image:</label>
+    <input id="inv_image" type="text" name="inv_image" class="login-form-input" value="<%= locals.inv_image %>" required />
+  </div>
+  <div class="login-form-group">
+    <label for="inv_thumbnail" class="login-form-label">Thumbnail:</label>
+    <input id="inv_thumbnail" type="text" name="inv_thumbnail" class="login-form-input" value="<%= locals.inv_thumbnail %>" required />
+  </div>
+  <div class="login-form-group">
+    <label for="inv_price" class="login-form-label">Price:</label>
+    <input id="inv_price" type="number" name="inv_price" class="login-form-input" value="<%= locals.inv_price %>" required />
+  </div>
+  <div class="login-form-group">
+    <label for="inv_miles" class="login-form-label">Miles:</label>
+    <input id="inv_miles" type="number" min="0" name="inv_miles" class="login-form-input" value="<%= locals.inv_miles %>" required />
+  </div>
+  <div class="login-form-group">
+    <label for="inv_color" class="login-form-label">Color:</label>
+    <input id="inv_color" type="text" name="inv_color" class="login-form-input" value="<%= locals.inv_color %>" required />
+  </div>
+
+  <input type="hidden" name="inv_id" value="<%= locals.inv_id ? locals.inv_id : '' %>" />
+
+  <button class="login-form-btn" disabled>Update Vehicle</button>
+</form>
+
+
+<noscript>JavaScript must be enabled to use this page.</noscript>
+<script src="../../js/inv-update.js"></script>
