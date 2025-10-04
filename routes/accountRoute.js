@@ -26,7 +26,10 @@ router.post('/update',
   validate.updateDetailsRules(),
   validate.checkUpdateData,
   utilities.handleErrors(accountController.updateAccountDetails))
-router.post('/updatePassword', utilities.handleErrors(accountController.updateAccountPassword))
+router.post('/updatePassword',
+  validate.updatePasswordRules(),
+  validate.checkUpdatePasswordData,
+  utilities.handleErrors(accountController.updateAccountPassword))
 router.post('/logout', utilities.handleErrors(accountController.accountLogout))
 
 module.exports = router;

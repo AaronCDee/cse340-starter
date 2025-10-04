@@ -170,5 +170,43 @@ validate.updateDetailsRules = () => {
   ]
 }
 
+/*  **********************************
+*  Update Details Data Validation Rules
+* ********************************* */
+validate.updatePasswordRules = () => {
+  return [
+    // password is required and must be strong password
+    body("account_password")
+      .trim()
+      .notEmpty()
+      .isStrongPassword({
+        minLength: 12,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+      .withMessage("Password does not meet requirements."),
+  ]
+}
+
+/* ******************************
+ * Check data and return errors or continue to update
+ * ***************************** */
+validate.checkUpdatePasswordData = async (req, res, next) => {
+  let errors = []
+  errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    res.render("account/edit", {
+      errors,
+      title: "Edit Account Details",
+      nav,
+    })
+    return
+  }
+  next()
+}
+
 module.exports = validate
 
