@@ -30,35 +30,61 @@ Util.getNav = async function (req, res, next) {
 /* **************************************
 * Build the classification view HTML
 * ************************************ */
-Util.buildClassificationGrid = async function(data){
-  let grid
-  if(data.length > 0){
+Util.buildClassificationGrid = async function(data) {
+  let grid = ''
+  if (data.length > 0) {
     grid = '<ul id="inv-display">'
     data.forEach(vehicle => {
-      grid += '<li>'
-      grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id
-      + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model
-      + 'details"><img src="' + vehicle.inv_thumbnail
-      +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model
-      +' on CSE Motors" /></a>'
-      grid += '<div class="namePrice">'
-      grid += '<hr />'
-      grid += '<h2>'
-      grid += '<a href="../../inv/detail/' + vehicle.inv_id +'" title="View '
-      + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">'
-      + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>'
-      grid += '</h2>'
-      grid += '<span>$'
-      + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>'
-      grid += '</div>'
-      grid += '</li>'
+      grid += `
+        <li class="inventory-item">
+          <div class="image-container" style="position: relative;">
+            <a href="../../inv/detail/${vehicle.inv_id}"
+               title="View ${vehicle.inv_make} ${vehicle.inv_model} details">
+              <img src="${vehicle.inv_thumbnail}"
+                   alt="Image of ${vehicle.inv_make} ${vehicle.inv_model} on CSE Motors" />
+            </a>
+
+            ${vehicle.is_favorite
+              ? `
+                <!-- Filled heart (favorite) -->
+                <form action="/favorite/delete/${vehicle.inv_id}" method="POST"
+                      style="position:absolute;top:10px;right:10px;">
+                  <button type="submit" class="favorite-btn active" title="Added to favorites" style="position:absolute;top:10px;right:10px;background:none;border:none;cursor:pointer;">
+                    ❤️ remove from favorites
+                  </button>
+                </form>
+              `
+              : `
+                <!-- Outlined heart (add to favorites) -->
+                <form action="/favorite/${vehicle.inv_id}" method="POST"
+                      style="position:absolute;top:10px;right:10px;">
+                  <button type="submit" class="favorite-btn" title="Add to favorites" style="background:none;border:none;cursor:pointer;">
+                    🤍 Add to favorites
+                  </button>
+                </form>
+              `}
+          </div>
+
+          <div class="namePrice">
+            <hr />
+            <h2>
+              <a href="../../inv/detail/${vehicle.inv_id}"
+                 title="View ${vehicle.inv_make} ${vehicle.inv_model} details">
+                 ${vehicle.inv_make} ${vehicle.inv_model}
+              </a>
+            </h2>
+            <span>$${new Intl.NumberFormat('en-US').format(vehicle.inv_price)}</span>
+          </div>
+        </li>
+      `
     })
     grid += '</ul>'
   } else {
-    grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
+    grid = '<p class="notice">Sorry, no matching vehicles could be found.</p>'
   }
   return grid
 }
+
 
 Util.buildInventoryPage = async function(data) {
   title =
@@ -160,6 +186,18 @@ Util.requireEmployeeOrAdmin = (req, res, next) => {
 
   if (res.locals.isEmployeeOrAdmin !== 1) {
     req.flash('notice', 'You do not have permission to perform that action.')
+    return res.redirect('/account/login')
+  }
+
+  next()
+}
+
+/* ****************************************
+* Middleware to check employee or admin
+**************************************** */
+Util.requireLogin = (req, res, next) => {
+  if (res.locals.loggedin !== 1) {
+    req.flash('notice', 'Please log in to access this page.')
     return res.redirect('/account/login')
   }
 

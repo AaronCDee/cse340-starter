@@ -10,18 +10,28 @@ async function getClassifications(){
 /* ***************************
  *  Get all inventory items and classification_name by classification_id
  * ************************** */
-async function getInventoryByClassificationId(classification_id) {
+async function getInventoryByClassificationId(classification_id, account_id = null) {
   try {
     const data = await pool.query(
-      `SELECT * FROM public.inventory AS i
+      `
+      SELECT
+        i.*,
+        c.classification_name,
+        CASE WHEN f.account_id IS NOT NULL THEN true ELSE false END AS is_favorite
+      FROM public.inventory AS i
       JOIN public.classification AS c
-      ON i.classification_id = c.classification_id
-      WHERE i.classification_id = $1`,
-      [classification_id]
+        ON i.classification_id = c.classification_id
+      LEFT JOIN public.inventory_favorite AS f
+        ON f.inventory_id = i.inv_id
+        AND ($2::int IS NULL OR f.account_id = $2)
+      WHERE i.classification_id = $1
+      `,
+      [classification_id, account_id]
     )
     return data.rows
   } catch (error) {
-    console.error("getclassificationsbyid error " + error)
+    console.error("getInventoryByClassificationId error", error)
+    throw error
   }
 }
 

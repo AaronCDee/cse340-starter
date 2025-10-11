@@ -7,8 +7,9 @@ const invCont = {}
  *  Build inventory by classification view
  * ************************** */
 invCont.buildByClassificationId = async function (req, res, next) {
+  const accountId = res.locals.accountData?.account_id
   const classification_id = req.params.classificationId
-  const data = await invModel.getInventoryByClassificationId(classification_id)
+  const data = await invModel.getInventoryByClassificationId(classification_id, accountId)
   const grid = await utilities.buildClassificationGrid(data)
   let nav = await utilities.getNav()
   const className = data[0].classification_name
